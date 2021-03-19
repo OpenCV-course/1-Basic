@@ -28,6 +28,9 @@
 # 5. Image Transformations
 16. [Translación](#schema16)
 17. [Rotación](#schema17)
+18. [Girar](#schema18)
+
+# 6 .Contour Detection
 
 <a name="schema1"></a>
 
@@ -289,7 +292,6 @@ cv.imshow('Rotated', rotated)
 
 <a name="schema18"></a>
 
-# 18. Girar
 ~~~python
 flip = cv.flip(img, 0)
 flip1 = cv.flip(img,1) #mirror
