@@ -18,6 +18,11 @@
 10. [Pintar una línea](#schem10)
 11. [Pintar una línea](#schema11)
 
+# 4. 5 Essential Functions in OpenCV
+12. [Convertir a escala de grises](#schema12)
+13. [Borroso y borde](#schema13)
+14. [Dilating the image y Eroding](#schema14)
+15. [Redimensionar y porción de imagen](#schema15)
 <hr>
 
 <a name="schema1"></a>
@@ -166,3 +171,70 @@ cv.putText(blank,"Hello",(225,225),cv.FONT_HERSHEY_TRIPLEX, 1.0,(0,255,0),2)
 cv.imshow("text", blank)
 ~~~
 ![blank](./images/007.png)
+
+<hr>
+
+<a name="schema12"></a>
+
+# 12. Convertir a escala de grises
+~~~python
+gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+cv.imshow("Gray", gray)
+~~~
+![canny](./images/009.png)
+<hr>
+
+<a name="schema13"></a>
+
+# 13. Borroso y borde
+`(5,5)' nivel de borroso
+~~~python
+blur = cv.GaussianBlur(img, (5,5),cv.BORDER_DEFAULT)
+cv.imshow("Blur", blur)
+~~~
+![canny](./images/010.png)
+
+~~~python
+canny = cv.Canny(img, 125,175)
+cv.imshow("Canny edge", canny)
+~~~
+![canny](./images/011.png)
+
+Para ver mejor el borde de las cosas ponemos en vez de la imagen original ponemos la borros
+~~~python
+canny = cv.Canny(blur, 125,175)
+cv.imshow("Canny edge", canny)
+~~~
+![canny](./images/012.png)
+<hr>
+
+<a name="schema14"></a>
+
+# 14. Dilating the image and Eroding
+
+~~~python
+dilated = cv.dilate(canny, (7,7), iterations = 3)
+cv.imshow("Dilated", canny)
+~~~
+![canny](./images/013.png)
+~~~python
+eroded = cv.erode(dilated, (7,7), iterations = 3)
+cv.imshow("Eroded", eroded)
+~~~
+![canny](./images/014.png)
+
+<hr>
+
+<a name="schema15"></a>
+
+# 15. Redimensionar y porción de imagen
+~~~python
+resize = cv.resize(img, (1000,1000))
+cv.imshow("Resize", resize)
+~~~
+![img](./images/015.png)
+~~~python
+crope = img[50:200, 200:400]
+cv.imshow("Crope",crope)
+~~~
+![img](./images/016.png)
