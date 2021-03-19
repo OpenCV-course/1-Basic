@@ -25,6 +25,10 @@
 15. [Redimensionar y porción de imagen](#schema15)
 <hr>
 
+# 5. Image Transformations
+16. [Translación](#schema16)
+17. [Rotación](#schema17)
+
 <a name="schema1"></a>
 
 # 1. Importar librerías
@@ -238,3 +242,58 @@ crope = img[50:200, 200:400]
 cv.imshow("Crope",crope)
 ~~~
 ![img](./images/016.png)
+
+<hr>
+
+<a name="schema16"></a>
+
+# 16. Translación
+Para hacer una translación de una imagen hay que crear una función que haga ese proceso. 
+Moviendo la imagen por los ejes x e y.
+~~~python
+def translate(img, x,y):
+    transMat = np.float32([[1,0,x],[0,1,y]])
+    dimensions = (img.shape[1], img.shape[0])
+    return cv.warpAffine(img, transMat, dimensions)
+# -x --> Left
+# -y --> Up
+# x --> Right
+# y --> Down
+translated = translate(img,100,100)
+cv.imshow("Translated", translated)
+~~~
+![img](./images/017.png)
+
+<hr>
+
+<a name="schema17"></a>
+
+# 17. Rotación
+~~~python
+def rotate(img, angle, rotPoint=None):
+    (height,width) = img.shape[:2]
+
+    if rotPoint is None:
+        rotPoint = (width//2,height//2)
+    
+    rotMat = cv.getRotationMatrix2D(rotPoint, angle, 1.0)
+    dimensions = (width,height)
+
+    return cv.warpAffine(img, rotMat, dimensions)
+
+rotated = rotate(img, -45)
+cv.imshow('Rotated', rotated)
+~~~
+![img](./images/018.png)
+<hr>
+
+<a name="schema18"></a>
+
+# 18. Girar
+~~~python
+flip = cv.flip(img, 0)
+flip1 = cv.flip(img,1) #mirror
+cv.imshow("Flip", flip1)
+~~~
+![img](./images/019.png)
+![img](./images/020.png)
