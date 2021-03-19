@@ -1,8 +1,14 @@
-# 1 Basic
+# Basic
 1. [Importar librerías ](#schema1)
+
+## 1 Read
+
 2. [Cargar una foto](#schema2)
 3. [Cargar un video](#schema3)
 4. [Cerrar todas las ventanas](#schema4)
+
+## 2 Rescale
+5. [Crear función de redimensionar](#schema5)
 
 <hr>
 
@@ -50,4 +56,26 @@ capture.release()
 
 ~~~python
 cv.destroyAllWindows()
+~~~
+<hr>
+
+<a name="schema5"></a>
+
+## 5. Crear función de redimensionar
+En esta función`rescaleFrame` hacemos una resescaldo de las imágenes y vídeos. Los vídeos tanto cargados como vídeos en directo.
+~~~python
+def rescaleFrame(frame, scale = 0.75):
+    # images, videos and live video
+    width = int(frame.shape[1] *scale)
+    height = int(frame.shape[0] *scale)
+    dimension = (width,height)
+    return cv.resize(frame, dimension, interpolation = cv.INTER_AREA)
+
+~~~
+Con `changeRes` sólo podemos usarlo si son vídeos en directo.
+~~~python
+def changeRes(width,height):
+    #live video
+    capture.set(3,width)
+    capture.set(4,height)
 ~~~
