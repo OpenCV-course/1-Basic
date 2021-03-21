@@ -30,7 +30,12 @@
 17. [Rotación](#schema17)
 18. [Girar](#schema18)
 
-# 6 .Contour Detection
+# 6. Contour Detection
+19. [Convertimos a gray y buscamos los contornos](#schema19)
+20. [Buscamos los contornos con la imagen borrosa](#schema20)
+21. [Threshold](#schema21)
+22. [Creamos un fondo negro](#schema22)
+
 
 <a name="schema1"></a>
 
@@ -288,9 +293,12 @@ rotated = rotate(img, -45)
 cv.imshow('Rotated', rotated)
 ~~~
 ![img](./images/018.png)
+
 <hr>
 
 <a name="schema18"></a>
+
+# 18. Girar
 
 ~~~python
 flip = cv.flip(img, 0)
@@ -299,3 +307,71 @@ cv.imshow("Flip", flip1)
 ~~~
 ![img](./images/019.png)
 ![img](./images/020.png)
+
+
+<hr>
+
+<a name="schema19"></a>
+
+# 19. Convertimos a gray y buscamos los contornos
+~~~python
+canny = cv.Canny(img, 125,175)
+cv.imshow("Canny", canny)
+
+#finf contourns
+contours, hierarchies = cv.findContours(canny, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+print(f'{len(contours)} contour(s) found!')
+~~~
+![img](./images/023.png)
+![img](./images/025.png)
+
+<hr>
+
+<a name="schema20"></a>
+
+# 20. Buscamos los contornos con la imagen borrosa
+~~~python
+blur = cv.GaussianBlur(gray, (5,5), cv.BORDER_DEFAULT)
+cv.imshow("Blur", gray)
+
+canny = cv.Canny(blur, 125,175)
+#cv.imshow("Canny", canny)
+
+#finf contourns
+contours, hierarchies = cv.findContours(canny, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+print(f'{len(contours)} contour(s) found!')
+
+~~~
+![img](./images/026.png)
+
+<hr>
+
+<a name="schema21"></a>
+
+# 21. Threshold
+~~~python
+ret, thresh = cv.threshold(gray, 125, 255, cv.THRESH_BINARY)
+cv.imshow('Thresh', thresh)
+
+#finf contourns
+contours, hierarchies = cv.findContours(thresh, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+print(f'{len(contours)} contour(s) found!')
+
+~~~
+![img](./images/027.png)
+<hr>
+
+<a name="schema22"></a>
+
+# 22. Creamos un fondo negro
+~~~python
+blank = np.zeros(img.shape, dtype='uint8')
+cv.imshow('Blank', blank)
+
+cv.drawContours(blank, contours, -1, (0,0,255),2)
+cv.imshow("Contours Drawn", blank)
+
+~~~
+![img](./images/028.png)
+
+Conclusión la mejor opción es buscar los contornos con la imagen borrosa. 
